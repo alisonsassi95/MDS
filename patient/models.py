@@ -12,14 +12,3 @@ class DataPatient(models.Model):
     icc = models.IntegerField()
     ecog = models.IntegerField()
     classification = models.IntegerField()
-
-    def __int__(self):
-        return self.age
-
-
-
-
-
-
-
-

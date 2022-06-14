@@ -1,0 +1,10 @@
+{% include 'base.html' %}
+{% block content  %}
+<div class="container">
+
+    <h1 class='text-center mt-3'>Resultado</h1>
+    <hr>
+    <h1 class='text-center text-primary'>O resultado da classificação do <b>{{ patient }}</b> é valor <b>{{ classification_result }}</b></h1>
+    <a class='btn btn-primary mt-4 p-1 text-center' href="{% url 'home' %}">Go Back</a>
+</div>
+{% endblock content  %}

@@ -8,7 +8,7 @@ def home(request):
 
 
 
-def predict(request):
+def patient(request):
     model = pd.read_pickle('Model_MDS.pickle')
 
     patient = request.GET['patient']
@@ -21,6 +21,20 @@ def predict(request):
     renal = request.GET['renal']
     icc = request.GET['icc']
     ecog = request.GET['ecog']
+    '''scoreSOFA = calculateSOFA(
+                                NEUROLOGICAL=neurological,
+                                CARDIOVASCULAR=cardiovascular,
+                                RESPIRATORY=respiratory,
+                                COAGULATION=coagulation,
+                                HEPATIC=hepatic,
+                                RENAL=renal
+                                )
+    scoreFragility = ecog
+    scoreTotal = calculateTotal(SOFA= int(scoreSOFA), ICC= int(line.get("ICC")), AGE= int(age) )
+    '''
+    scoreSOFA = '29'
+    scoreFragility = ecog #(só é valido para pessoas acima de 60 anos)
+    #scoreTotal = '30'
 
     list_var = []
 
@@ -33,6 +47,9 @@ def predict(request):
     list_var.append(renal)
     list_var.append(icc)
     list_var.append(ecog)
+    list_var.append(scoreSOFA)
+    list_var.append(scoreFragility)
+    #list_var.append(scoreTotal)
 
     print(list_var)
 
@@ -54,7 +71,7 @@ def predict(request):
         classification=classification[0]
     )
 
-    return render(request, 'predict.html', {'classification_result': classification[0]})
+    return render(request, 'patients.html', {'patient':patient,'classification_result': classification[0]})
 
 
 
@@ -66,3 +83,4 @@ def db_record(request):
     }
 
     return render(request, 'database.html', context)
+
