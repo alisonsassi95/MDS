@@ -1,0 +1,326 @@
+{% include 'base.html' %}
+
+{% block content  %}
+
+<div class='container mb-6 mt-2 p-4'>
+    <form action="{% url 'predict' %}" class="row g-3 needs-validation" novalidate>
+        <div class='col-md-12'>
+            {% csrf_token %}
+            <div class='col-md-8'>
+                <h4 class="mb-3">Dados do Paciente</h4>
+                <span><i>Dados do paciente para identificação.</i></span>
+
+                <div class="mb-3"></div>
+                <label for="patient" class="form-label">Nome</label>
+                <input type="text" class="form-control" name="patient" id="patient" required
+                    placeholder="Digite o nome completo do paciente">
+            </div>
+
+            <div class="col-md-3">
+                <label for="age" class="form-label">Idade</label>
+                <input type="number" class="form-control" name="age" id="age" required
+                    placeholder="Digite a idade do paciente">
+            </div>
+            <br> <br>
+            <h5>
+                1. Previsão de sobrevivência a curto prazo, determinado o Sequential Organ Failure Assessment - SOFA
+                (simplificado).
+            </h5>
+            <div class="d-block my-3">
+                <!--NEUROLÓGICO-->
+                <div class="d-block my-3">
+                    <h4 class="mb-3">NEUROLÓGICO</h4>
+                    <span><i>Escala de Coma de Glasgow</i></span>
+
+                    <div class="custom-control custom-radio">
+                        <input id="neuro0" name="neurological" type="radio" value="0" class="custom-control-input"
+                            checked required>
+                        <label class="custom-control-label" for="neuro0"></label>
+                        <span class="item-subtitle">15</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="neuro1" name="neurological" type="radio" value="1" class="custom-control-input"
+                            checked required>
+                        <label class="custom-control-label" for="neuro1"></label>
+                        <span class="item-subtitle">13 a 14</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="neuro2" name="neurological" type="radio" value="2" class="custom-control-input"
+                            checked required>
+                        <label class="custom-control-label" for="neuro2"></label>
+                        <span class="item-subtitle">10 a 12</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="neuro3" name="neurological" type="radio" value="3" class="custom-control-input"
+                            checked required>
+                        <label class="custom-control-label" for="neuro3"></label>
+                        <span class="item-subtitle">6 a 9</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="neuro4" name="neurological" type="radio" value="4" class="custom-control-input"
+                            checked required>
+                        <label class="custom-control-label" for="neuro4"></label>
+                        <span class="item-subtitle"> &lt;6 </span>
+                    </div>
+                </div>
+                <!--CARDIOVASCULAR-->
+                <div class="d-block my-3">
+                    <h4 class="mb-3">CARDIOVASCULAR</h4>
+                    <span class="item-subtitle">Hipotensão,<br>mmHG</span>
+
+                    <div class="custom-control custom-radio">
+                        <input id="cardio0" name="cardiovascular" type="radio" value="0" class="custom-control-input"
+                            checked required>
+                        <label class="custom-control-label" for="cardio0"></label>
+                        <span class="item-subtitle">-</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="cardio1" name="cardiovascular" type="radio" value="1" class="custom-control-input"
+                            checked required>
+                        <label class="custom-control-label" for="cardio1"></label>
+                        <span class="item-subtitle">PAM&lt;70mmHg</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="cardio2" name="cardiovascular" type="radio" value="2" class="custom-control-input"
+                            checked required>
+                        <label class="custom-control-label" for="cardio2"></label>
+                        <span class="item-subtitle">Dopamina ≤ 5 ou Dobutamina qualquer dose</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="cardio3" name="cardiovascular" type="radio" value="3" class="custom-control-input"
+                            checked required>
+                        <label class="custom-control-label" for="cardio3"></label>
+                        <span class="item-subtitle">Dopamina &gt; 5 ou Noradrenalina ≤ 0,1</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="cardio4" name="cardiovascular" type="radio" value="4" class="custom-control-input"
+                            checked required>
+                        <label class="custom-control-label" for="cardio4"></label>
+                        <span class="item-subtitle"> Dopamina &gt; 15 ou Noradrenalina &gt; 0,1</span>
+                    </div>
+                </div>
+                <!--RESPIRATORY-->
+                <div class="d-block my-3">
+                    <h4 class="mb-3">RESPIRATÓRIO</h4>
+                    <span class="item-subtitle">Saturação<br>Periférica de O2</span>
+
+                    <div class="custom-control custom-radio">
+                        <input id="resp0" name="respiratory" type="radio" value="0" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="resp0"></label>
+                        <span class="item-subtitle">-</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="resp1" name="respiratory" type="radio" value="1" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="resp1"></label>
+                        <span class="item-subtitle">SpO2&gt;92% com Cateter nasal O2 até 2l/min</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="resp2" name="respiratory" type="radio" value="2" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="resp2"></label>
+                        <span class="item-subtitle">SpO2&gt; 92% com Cateter nasal O2 até 5l/min</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="resp3" name="respiratory" type="radio" value="3" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="resp3"></label>
+                        <span class="item-subtitle">SpO2&gt;92% com ventilação mecânica com FiO2 até 40%</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="resp4" name="respiratory" type="radio" value="4" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="resp4"></label>
+                        <span class="item-subtitle"> SpO2&gt; 92% com ventilação mecânica com FiO2&gt; 40% </span>
+                    </div>
+                </div>
+                <!--COAGULAÇÃO-->
+                <div class="d-block my-3">
+                    <h4 class="mb-3">COAGULAÇÃO</h4>
+                    <span><i>Plaquetas 10³/µl</i></span>
+
+                    <div class="custom-control custom-radio">
+                        <input id="coag0" name="coagulation" type="radio" value="0" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="coag0"></label>
+                        <span class="item-subtitle">-</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="coag1" name="coagulation" type="radio" value="1" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="coag1"></label>
+                        <span class="item-subtitle">&lt;150</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="coag2" name="coagulation" type="radio" value="2" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="coag2"></label>
+                        <span class="item-subtitle">&lt;100</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="coag3" name="coagulation" type="radio" value="3" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="coag3"></label>
+                        <span class="item-subtitle">&lt;50</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="coag4" name="coagulation" type="radio" value="4" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="coag4"></label>
+                        <span class="item-subtitle"> &lt;20 </span>
+                    </div>
+                </div>
+                <!--HEPÁTICO-->
+                <div class="d-block my-3">
+                    <h4 class="mb-3">HEPÁTICO</h4>
+                    <span><i>INR<br>Inspeção</i></span>
+
+                    <div class="custom-control custom-radio">
+                        <input id="hepa0" name="hepatic" type="radio" value="0" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="hepa0"></label>
+                        <span class="item-subtitle">-</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="hepa1" name="hepatic" type="radio" value="1" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="hepa1"></label>
+                        <span class="item-subtitle">&lt;1,1 Anictérico</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="hepa2" name="hepatic" type="radio" value="2" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="hepa2"></label>
+                        <span class="item-subtitle">1,1 - 1,36</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="hepa3" name="hepatic" type="radio" value="3" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="hepa3"></label>
+                        <span class="item-subtitle">1,36 - 1,8</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="hepa4" name="hepatic" type="radio" value="4" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="hepa4"></label>
+                        <span class="item-subtitle">1,88 - 2,15 Ictérico</span>
+                    </div>
+                </div>
+                <!--RENAL-->
+                <div class="d-block my-3">
+                    <h4 class="mb-3">RENAL</h4>
+                    <span><i>Creatinina (mg/dL)<br>Diurese (mL/dia)</span>
+
+                    <div class="custom-control custom-radio">
+                        <input id="re0" name="renal" type="radio" value="0" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="re0"></label>
+                        <span class="item-subtitle">-</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="re1" name="renal" type="radio" value="1" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="re1"></label>
+                        <span class="item-subtitle">1,2 - 1,9<br> &gt;500</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="re2" name="renal" type="radio" value="2" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="re2"></label>
+                        <span class="item-subtitle">2 - 3,4 -</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="re3" name="renal" type="radio" value="3" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="re3"></label>
+                        <span class="item-subtitle">3,5 - 4,9 &lt;500</span>
+                    </div>
+                    <div class="custom-control custom-radio">
+                        <input id="re4" name="renal" type="radio" value="4" class="custom-control-input" checked
+                            required>
+                        <label class="custom-control-label" for="re4"></label>
+                        <span class="item-subtitle"> &gt;5,0 &lt;200 </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <h5>2. Previsão de sobrevivência a longo prazo, avaliado pela presença de comorbidades.
+                        Na revisão do AMIB 2020, apenas duas categorias são mantidas: dois pontos são alocados a
+                        pacientes com expectativa de sobrevida inferior a cinco anos e quatro pontos alocados a
+                        pacientes com expectativa de sobrevida inferior a um ano;</h5>
+                    <div class="col-md-8 order-md-2 mb-4">
+                        <ul class="list-group mb-3">
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                <div>
+                                    <h6 class="my-0">ICC</h6>
+                                    <small class="text-muted">Índice de Comorbidades</small>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="icc1" name="icc" type="radio" value="2" class="custom-control-input"
+                                        checked required>
+                                    <label class="custom-control-label" for="icc1"></label>
+                                    <span class="item-subtitle"> Pacientes com expectativa de sobrevida inferior a cinco
+                                        anos </span>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="icc2" name="icc" type="radio" value="4" class="custom-control-input"
+                                        checked required>
+                                    <label class="custom-control-label" for="icc2"></label>
+                                    <span class="item-subtitle"> Pacientes com expectativa de sobrevida inferior a um
+                                        ano </span>
+                                </div>
+                            </li>
+                            <div>
+                                <h6 class="my-0">ECOG - Eastern Cooperative Oncology Group</h6>
+                                <small class="text-muted">* Só deve ser aplicada para doentes com idade igual ou
+                                    superior a 60 anos.</small>
+                            </div>
+                            <li class="list-group-item d-flex justify-content-between lh-condensed">
+                                
+                                <div class="custom-control custom-radio">
+                                    <input id="ECOG0" name="ecog" type="radio" value="0" class="custom-control-input"
+                                        checked required>
+                                    <label class="custom-control-label" for="ECOG0"></label>
+                                    <span class="item-subtitle"> Completamente ativo</span>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="ECOG1" name="ecog" type="radio" value="1" class="custom-control-input"
+                                        checked required>
+                                    <label class="custom-control-label" for="ECOG1"></label>
+                                    <span class="item-subtitle"> Restrição a atividades físicas rigorosas</span>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="ECOG2" name="ecog" type="radio" value="2" class="custom-control-input"
+                                        checked required>
+                                    <label class="custom-control-label" for="ECOG2"></label>
+                                    <span class="item-subtitle"> Auto-cuidados</span>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input id="ECOG3" name="ecog" type="radio" value="3" class="custom-control-input"
+                                        checked required>
+                                    <label class="custom-control-label" for="ECOG3"></label>
+                                    <span class="item-subtitle"> Auto-cuidados limitados</span>
+                                </div>
+                                <div class="check-group">
+                                    <input id="ECOG4" name="ecog" type="radio" value="4" class="check-btn check-btn"
+                                        checked required>
+                                    <label class="check-btn check-btn" for="ECOG4"></label>
+                                    <span class="item-title"> Completamente incapaz</span>
+                                </div>
+                              
+                            </li>
+                        </ul>
+
+                        <button type="submit" value="Submit"
+                            class="btn btn-success mt-4 mb-4 shadow pt-3 pb-4 pl-1 pr-1">Confirm
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+{% endblock content  %}

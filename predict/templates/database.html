@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1 class='text-center text-success mt-4 p-2'> Database</h1>
+    <hr>
+
+    <div class='container p-2'>
+
+            <table class="table p-2 shadow rounded">
+            <thead>
+                <tr>
+                <th class='table-success' scope="col">Id</th>
+                <th class='table-success' scope="col">patient</th>
+                <th class='table-success' scope="col">age</th>
+                <th class='table-success' scope="col">neurological</th>
+                <th class='table-success' scope="col">cardiovascular</th>
+                <th class='table-success' scope="col">respiratory</th>
+                <th class='table-success' scope="col">coagulation</th>
+                <th class='table-success' scope="col">hepatic</th>
+                <th class='table-success' scope="col">renal</th>
+                <th class='table-success' scope="col">icc</th>
+                <th class='table-success' scope="col">ecog</th>
+                <th class='table-success' scope="col">classification</th>               
+                </tr>
+            </thead>
+            <tbody>
+
+                {% if patient_records %}
+
+                    {% for data in patient_records %}
+                        <tr>
+                            <th scope="row">{{ data.id }}</th>
+                            <td>{{ data.patient }}</td>
+                            <td>{{ data.age  }}</td>
+                            <td>{{ data.neurological }}</td>
+                            <td>{{ data.cardiovascular }}</td>
+                            <td>{{ data.respiratory  }}</td>
+                            <td>{{ data.coagulation }}</td>
+                            <td>{{ data.hepatic }}</td>
+                            <td>{{ data.renal }}</td>
+                            <td>{{ data.icc }}</td>
+                            <td>{{ data.ecog }}</td>
+                            <td>{{ data.classification }}</td>
+
+                        </tr>
+
+                    {% endfor %}   
+
+                {% else %}
+
+                    <p>No Data in The Database so Far!</p>     
+
+                {% endif %}
+                    
+            </tbody>
+        </table>
+
+    </div>
+
+{% endblock  %}
